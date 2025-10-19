@@ -1,0 +1,101 @@
+Donne les requêtes d’insertion permettant de remplir la base de données dont le modèle relationnel est le suivant :
+
+MISSIONS = (
+    id_mis INT,
+    date_depart DATETIME,
+    date_arriv DATETIME,
+    statut_mis VARCHAR(50),
+    lieu_dep_mis VARCHAR(40),
+    destination_mis VARCHAR(40),
+    distance INT
+);
+
+VEHICULES = (
+    id_veh INT,
+    immatriculation VARCHAR(15),
+    type_veh VARCHAR(40),
+    capacite_veh INT
+);
+
+CONDUCTEURS = (
+    num_permis INT,
+    nom_cond VARCHAR(50),
+    prenom_cond VARCHAR(50),
+    date_nai_cond DATE,
+    date_embauche DATE,
+    type_permis VARCHAR(10),
+    #num_permis_formé*
+);
+
+CLIENTS = (
+    id_cl INT,
+    nom_cl VARCHAR(50),
+    num_telephone_cl INT,
+    num_rue_cl INT,
+    nom_rue_cI VARCHAR(60),
+    ville_cl VARCHAR(50)
+);
+
+FACTURES = (
+    id_fact INT,
+    montant_fact DECIMAL(25,2),
+    date_emis DATE,
+    statut_paiem VARCHAR(20),
+    montant_paye INT,
+    #id_cl,
+    #id_mis
+);
+
+EQUIPEMENT = (
+    id_equip INT,
+    poid_equi DECIMAL(25,2),
+    volume_equip DECIMAL(15,2),
+    valeur_equip DECIMAL(15,2),
+    #id_mis
+);
+
+AFFECTER = (
+    #id_mis,
+    #id_veh,
+    #num_permis,
+    date_affect DATE
+);
+
+COMMANDE = (
+    #id_mis,
+    #id_cl,
+    date_com DATETIME,
+    statut_com VARCHAR(20)
+);
+
+Les clés primaires correspondent aux id, sauf si autre chose est précisé (quand c'est un attribut composé).
+Les clés étrangères sont identifiées par les #, et ont le même nom que les clés primaires auxquelles elles font référence.
+
+Il doit y avoir en général plus de 25 enregistrements par tables et plus de 50 dans les tables MISSIONS et FACTURES.
+
+Il faut :
+- des clients qui ont plus d'une facture et commande et d'autres qui ont une et une seule ;
+- des conducteurs qui sont affectés à aucun véhicule ;
+- tenir compte de la relation réflexive entre conducteurs ;
+- des véhicules aussi sans missions ;
+- des véhicules de types différents et de même type ;
+- des conducteurs de même type de permis et de permis différents ;
+- des factures payées, non payées, en attente, annulées ;
+- même logique pour des missions ;
+- faire en sorte que les données soient cohérentes et que notre base de donnée puisse gérer les types de requêtes possibles qui existent ;
+- des conducteurs de plus de 18 ans ;
+- des clients de même destination et de destinations différentes.
+
+Les clés étrangères doivent faire référence aux clés primaires existantes :
+donne les lignes en commençant par remplir les tables dans lesquelles il n'y a pas de clés étrangères,
+puis les tables dans lesquelles les clés étrangères font références à des clés primaires des tables déjà remplies
+et respecte toutes les contraintes d'intégrités.
+
+EN voici certaines contraintes obligatoires :
+- type_permis dans ('A','B','C','D','E') ;
+- statut_mis dans ('planifiée','en_cours','terminée','annulée') ;
+- statut_fact dans ('payée','en_attente','annulée','avance_payée') ;
+- des clients qui n'ont pas renseigné leur ville actuelle ou d'habitation il faut mettre : 'non_renseignée' par défaut ;
+- il faut des numéros de téléphone français.
+
+Fournis l'ensemble sous la forme d’un script SQL prêt à être exécuté.
